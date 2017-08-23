@@ -25,6 +25,8 @@ namespace ArtTherapy
         public MainPage()
         {
             this.InitializeComponent();
+
+            //hello
         }
     }
 }
