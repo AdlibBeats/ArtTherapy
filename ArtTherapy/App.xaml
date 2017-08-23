@@ -4,5 +4,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ArtTherapy"
     RequestedTheme="Light">
-
+    
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Colors/ColorsDictionary.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/ButtonDictionary.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/HyperlinkButtonDictionary.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/CheckBoxDictionary.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/PasswordBoxDictionary.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/TextBlockDictionary.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/TextBoxDictionary.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/ListBoxItemDictionary.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/ComboBoxDictionary.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/ToggleSwitchDictionary.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/ScrollBarDictionary.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/GridViewItemDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>
