@@ -8,12 +8,18 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Foundation.Metadata;
+using Windows.Phone.UI.Input;
+using Windows.System;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace ArtTherapy
@@ -23,6 +29,8 @@ namespace ArtTherapy
     /// </summary>
     sealed partial class App : Application
     {
+        public static bool IsPhone => ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0);
+
         /// <summary>
         /// Инициализирует одноэлементный объект приложения.  Это первая выполняемая строка разрабатываемого
         /// кода; поэтому она является логическим эквивалентом main() или WinMain().
@@ -69,9 +77,92 @@ namespace ArtTherapy
                     // параметр
                     rootFrame.Navigate(typeof(MenuPage), e.Arguments);
                 }
+
+                SetDefaultSettings(rootFrame);
+
                 // Обеспечение активности текущего окна
                 Window.Current.Activate();
             }
+        }
+
+        private void SetDefaultSettings(Frame rootFrame)
+        {
+            if (rootFrame != null)
+            {
+                // Фон фрейма
+                rootFrame.Background = new SolidColorBrush(Colors.Black);
+
+                //BitmapImage image = new BitmapImage(
+                //new Uri("ms-appx:///Assets/bg@3x.png", UriKind.RelativeOrAbsolute));
+
+                //rootFrame.Background = new ImageBrush()
+                //{
+                //    ImageSource = image,
+                //    Stretch = Stretch.None
+                //};
+
+                // Реализация собитий кнопки "Назад"
+                if (IsPhone)
+                     HardwareButtons.BackPressed += (sender, ev) =>
+                    {
+                        ev.Handled = true;
+                        //if (RootFrame.Content is ISplitPage page)
+                        //{
+                        //    if (page.ContentFrame.CanGoBack)
+                        //        page.ResetNavigation();
+                        //}
+                        if (rootFrame.CanGoBack)
+                            rootFrame.GoBack();
+                    };
+                else
+                    rootFrame.KeyUp += (sender, ev) =>
+                    {
+                        if (ev.Key == VirtualKey.Escape)
+                        {
+                            //if (RootFrame.Content is ISplitPage page)
+                            //{
+                            //    if (page.ContentFrame.CanGoBack)
+                            //        page.ResetNavigation();
+                            //}
+                            if (rootFrame.CanGoBack)
+                                rootFrame.GoBack();
+                        }
+                    };
+            }
+
+            // Установка минимального размера окна
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(300, 300));
+
+            //Цвет верхней панели и кнопок для пк
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+            {
+                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                if (titleBar != null)
+                {
+                    titleBar.ButtonHoverBackgroundColor = Colors.Gray;
+                    titleBar.ButtonHoverForegroundColor = Colors.White;
+                    titleBar.ButtonBackgroundColor = Colors.Black;
+                    titleBar.ButtonForegroundColor = Colors.White;
+                    titleBar.BackgroundColor = Colors.Black;
+                    titleBar.ForegroundColor = Colors.White;
+                }
+            }
+
+            //Цвет верхней панели для телефона
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var statusBar = StatusBar.GetForCurrentView();
+                if (statusBar != null)
+                {
+                    statusBar.ForegroundColor = Colors.White;
+                    statusBar.BackgroundColor = Colors.Black;
+                    statusBar.BackgroundOpacity = 1;
+                }
+            }
+
+            // Запуск мобильного приложения в режиме FullScreen
+            //if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
+            //    ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
         }
 
         /// <summary>
@@ -79,7 +170,7 @@ namespace ArtTherapy
         /// </summary>
         /// <param name="sender">Фрейм, для которого произошел сбой навигации</param>
         /// <param name="e">Сведения о сбое навигации</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
