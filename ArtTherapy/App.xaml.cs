@@ -1,25 +1,10 @@
-﻿using ArtTherapy.Pages.MenuPages;
+﻿//using ArtTherapy.Extensions;
+using ArtTherapy.Pages.MenuPages;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Foundation.Metadata;
-using Windows.Phone.UI.Input;
-using Windows.System;
-using Windows.UI;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace ArtTherapy
@@ -27,10 +12,8 @@ namespace ArtTherapy
     /// <summary>
     /// Обеспечивает зависящее от конкретного приложения поведение, дополняющее класс Application по умолчанию.
     /// </summary>
-    sealed partial class App : Application
+    public sealed partial class App : Application
     {
-        public static bool IsPhone => ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0);
-
         /// <summary>
         /// Инициализирует одноэлементный объект приложения.  Это первая выполняемая строка разрабатываемого
         /// кода; поэтому она является логическим эквивалентом main() или WinMain().
@@ -78,91 +61,35 @@ namespace ArtTherapy
                     rootFrame.Navigate(typeof(MenuPage), e.Arguments);
                 }
 
-                SetDefaultSettings(rootFrame);
+                SetSettings(rootFrame);
 
                 // Обеспечение активности текущего окна
                 Window.Current.Activate();
             }
         }
 
-        private void SetDefaultSettings(Frame rootFrame)
+        /// <summary>
+        /// Настройка окна и фрейма
+        /// </summary>
+        /// <param name="rootFrame">Главный фрейм</param>
+        private void SetSettings(Frame rootFrame)
         {
-            if (rootFrame != null)
+            if (Extensions.AppExtension.IsMobile)
             {
-                // Фон фрейма
-                rootFrame.Background = new SolidColorBrush(Colors.Black);
-
-                //BitmapImage image = new BitmapImage(
-                //new Uri("ms-appx:///Assets/bg@3x.png", UriKind.RelativeOrAbsolute));
-
-                //rootFrame.Background = new ImageBrush()
-                //{
-                //    ImageSource = image,
-                //    Stretch = Stretch.None
-                //};
-
-                // Реализация собитий кнопки "Назад"
-                if (IsPhone)
-                     HardwareButtons.BackPressed += (sender, ev) =>
-                    {
-                        ev.Handled = true;
-                        //if (RootFrame.Content is ISplitPage page)
-                        //{
-                        //    if (page.ContentFrame.CanGoBack)
-                        //        page.ResetNavigation();
-                        //}
-                        if (rootFrame.CanGoBack)
-                            rootFrame.GoBack();
-                    };
-                else
-                    rootFrame.KeyUp += (sender, ev) =>
-                    {
-                        if (ev.Key == VirtualKey.Escape)
-                        {
-                            //if (RootFrame.Content is ISplitPage page)
-                            //{
-                            //    if (page.ContentFrame.CanGoBack)
-                            //        page.ResetNavigation();
-                            //}
-                            if (rootFrame.CanGoBack)
-                                rootFrame.GoBack();
-                        }
-                    };
+                Extensions.AppSettingsExtension settingsEx =
+                    new Extensions.MobileSettingsExtension(rootFrame);
+                Extensions.MobileSettings settings =
+                    (Extensions.MobileSettings)settingsEx.Create();
+                settings.SetSettings();
             }
-
-            // Установка минимального размера окна
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(300, 300));
-
-            //Цвет верхней панели и кнопок для пк
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+            else
             {
-                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-                if (titleBar != null)
-                {
-                    titleBar.ButtonHoverBackgroundColor = Colors.Gray;
-                    titleBar.ButtonHoverForegroundColor = Colors.White;
-                    titleBar.ButtonBackgroundColor = Colors.Black;
-                    titleBar.ButtonForegroundColor = Colors.White;
-                    titleBar.BackgroundColor = Colors.Black;
-                    titleBar.ForegroundColor = Colors.White;
-                }
+                Extensions.AppSettingsExtension settingsEx =
+                    new Extensions.DesktopSettingsExtension(rootFrame);
+                Extensions.DesktopSettings settings =
+                    (Extensions.DesktopSettings)settingsEx.Create();
+                settings.SetSettings();
             }
-
-            //Цвет верхней панели для телефона
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                var statusBar = StatusBar.GetForCurrentView();
-                if (statusBar != null)
-                {
-                    statusBar.ForegroundColor = Colors.White;
-                    statusBar.BackgroundColor = Colors.Black;
-                    statusBar.BackgroundOpacity = 1;
-                }
-            }
-
-            // Запуск мобильного приложения в режиме FullScreen
-            //if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
-            //    ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
         }
 
         /// <summary>

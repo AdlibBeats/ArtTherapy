@@ -96,6 +96,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppStorage\AppStorage.cs" />
+    <Compile Include="Extensions\AppExtension.cs" />
+    <Compile Include="Extensions\AppSettingsExtension.cs" />
     <Compile Include="Extensions\ImageSourceExtension.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\ItemsModels\CurrentItemModel.cs" />
