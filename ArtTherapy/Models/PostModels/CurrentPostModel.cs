@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Windows.UI.Xaml.Media;
 
-namespace ArtTherapy.Models
+namespace ArtTherapy.Models.PostModels
 {
-    public class ItemModel : BaseModel
+    public class CurrentPostModel : BaseModel
     {
         public string Icon
         {
@@ -14,10 +11,21 @@ namespace ArtTherapy.Models
             set
             {
                 _Icon = value;
-                OnPropertyChanged(nameof(ItemModel.Icon));
+                OnPropertyChanged(nameof(CurrentPostModel.Icon));
             }
         }
         string _Icon;
+
+        public ImageSource Image
+        {
+            get { return _Image; }
+            set
+            {
+                _Image = value;
+                OnPropertyChanged(nameof(CurrentPostModel.Image));
+            }
+        }
+        ImageSource _Image;
 
         public string Name
         {
@@ -25,7 +33,7 @@ namespace ArtTherapy.Models
             set
             {
                 _Name = value;
-                OnPropertyChanged(nameof(ItemModel.Name));
+                OnPropertyChanged(nameof(CurrentPostModel.Name));
             }
         }
         string _Name;
@@ -36,7 +44,7 @@ namespace ArtTherapy.Models
             set
             {
                 _Description = value;
-                OnPropertyChanged(nameof(ItemModel.Description));
+                OnPropertyChanged(nameof(CurrentPostModel.Description));
             }
         }
         string _Description;
@@ -47,7 +55,7 @@ namespace ArtTherapy.Models
             set
             {
                 _Type = value;
-                OnPropertyChanged(nameof(ItemModel.Type));
+                OnPropertyChanged(nameof(CurrentPostModel.Type));
             }
         }
         Type _Type;

@@ -1,12 +1,11 @@
-﻿using ArtTherapy.Models;
-using ArtTherapy.Models.MenuModel;
-using ArtTherapy.Pages.MenuPage;
-using System;
-using System.Collections.Generic;
+﻿using System;
+
+using ArtTherapy.Models.ItemsModels;
+using ArtTherapy.Pages.PostPages;
+using ArtTherapy.Pages.SettingsPages;
+using ArtTherapy.Pages.AboutAppPages;
+
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace ArtTherapy.ViewModels
@@ -15,31 +14,29 @@ namespace ArtTherapy.ViewModels
     {
         public MenuViewModel()
         {
-            MenuModel = new MenuModel()
+            MenuModel = new ItemsModel()
             {
-                MenuItems = new ObservableCollection<ItemModel>()
+                Items = new ObservableCollection<CurrentItemModel>()
                 {
-                    new ItemModel() { Icon = "\xE10F", Name = "Главное меню", Type = typeof(MenuPage) }
-                    //new ItemModel() { Icon = "\xE1A5", Name = "Текущая заявка", Type = typeof(CurrentOrderPage) },
-                    //new ItemModel() { Icon = "\xE7C3", Name = "История заявок", Type = typeof(OrderHistoryPage) },
-                    //new ItemModel() { Icon = "\xE77F", Name = "Подобрать решение", Type = typeof(SelectSolutionPage) },
-                    //new ItemModel() { Icon = "\xE7F4", Name = "Каталог оборудования", Type = typeof(EquipmentCatalogPage) },
-                    //new ItemModel() { Icon = "\xE81E", Name = "Каталог решений", Type = typeof(SolutionCatalogPage) },
-                    //new ItemModel() { Icon = "\xE897", Name = "О приложении", Type = typeof(AboutPage) },
-                    //new ItemModel() { Icon = "\xE1E0", Name = "Выход", Type = typeof(INullPage) }
+                    new CurrentItemModel() { Icon = "\xE10F", Name = "Стихи", Type = typeof(PostPage) },
+                    new CurrentItemModel() { Icon = "\xE1A5", Name = "Сказки", Type = typeof(PostPage) },
+                    new CurrentItemModel() { Icon = "\xE7C3", Name = "Статьи", Type = typeof(PostPage) },
+                    new CurrentItemModel() { Icon = "\xE77F", Name = "О приложении", Type = typeof(AboutAppPage) },
+                    new CurrentItemModel() { Icon = "\xE7F4", Name = "Настройки", Type = typeof(SettingsPage) }
                 }
             };
         }
 
         #region Public Dependency Properties
-        public MenuModel MenuModel
+
+        public ItemsModel MenuModel
         {
-            get { return (MenuModel)GetValue(MenuModelProperty); }
+            get { return (ItemsModel)GetValue(MenuModelProperty); }
             set { SetValue(MenuModelProperty, value); }
         }
 
         public static readonly DependencyProperty MenuModelProperty =
-            DependencyProperty.Register("MenuModel", typeof(MenuModel), typeof(MenuViewModel), new PropertyMetadata(null));
+            DependencyProperty.Register("MenuModel", typeof(ItemsModel), typeof(MenuViewModel), new PropertyMetadata(null));
 
         #endregion
     }

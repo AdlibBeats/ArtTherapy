@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArtTherapy.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -14,7 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace ArtTherapy.Pages.MenuPage
+namespace ArtTherapy.Pages.MenuPages
 {
     public sealed partial class MenuPage : Page, IPage
     {
@@ -45,6 +46,30 @@ namespace ArtTherapy.Pages.MenuPage
         public MenuPage()
         {
             this.InitializeComponent();
+            Title = "Меню";
+            NavigateEventType = NavigateEventTypes.ListBoxSelectionChanged;
+            DataContext = new MenuViewModel();
+        }
+
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainFrame.CanGoBack)
+                MainFrame.GoBack();
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //TODO:
+        }
+
+        private void MainFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            //TODO:
         }
 
         #region INotifyPropertyChanged Members
