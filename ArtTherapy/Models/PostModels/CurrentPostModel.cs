@@ -1,63 +1,42 @@
-﻿using System;
-using Windows.UI.Xaml.Media;
+﻿using Windows.UI.Xaml.Media;
 
 namespace ArtTherapy.Models.PostModels
 {
     public class CurrentPostModel : BaseModel
     {
-        public string Icon
+        public uint Id
         {
-            get { return _Icon; }
-            set
-            {
-                _Icon = value;
-                OnPropertyChanged(nameof(CurrentPostModel.Icon));
-            }
+            get => _Id;
+            set => _Id = GetValue(value, nameof(Id));
         }
-        string _Icon;
+        private uint _Id;
 
         public ImageSource Image
         {
-            get { return _Image; }
-            set
-            {
-                _Image = value;
-                OnPropertyChanged(nameof(CurrentPostModel.Image));
-            }
+            get => _Image;
+            set => _Image = GetValue(value, nameof(Image));
         }
-        ImageSource _Image;
+        private ImageSource _Image;
 
         public string Name
         {
-            get { return _Name; }
-            set
-            {
-                _Name = value;
-                OnPropertyChanged(nameof(CurrentPostModel.Name));
-            }
+            get => _Name;
+            set => _Name = GetValue(value, nameof(Name));
         }
-        string _Name;
+        private string _Name;
 
         public string Description
         {
-            get { return _Description; }
-            set
-            {
-                _Description = value;
-                OnPropertyChanged(nameof(CurrentPostModel.Description));
-            }
+            get => _Description;
+            set => _Description = GetValue(value, nameof(Description));
         }
-        string _Description;
+        private string _Description;
 
-        public Type Type
+        public string Type
         {
-            get { return _Type; }
-            set
-            {
-                _Type = value;
-                OnPropertyChanged(nameof(CurrentPostModel.Type));
-            }
+            get => _Type;
+            set => _Type = GetValue(value, nameof(Type));
         }
-        Type _Type;
+        private string _Type;
     }
 }

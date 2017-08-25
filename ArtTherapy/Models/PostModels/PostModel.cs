@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace ArtTherapy.Models.PostModels
 {
@@ -8,11 +7,7 @@ namespace ArtTherapy.Models.PostModels
         public ObservableCollection<CurrentPostModel> Items
         {
             get => _Items;
-            set
-            {
-                _Items = value;
-                OnPropertyChanged(nameof(PostModel.Items));
-            }
+            set => _Items = GetValue(value, nameof(Items));
         }
         private ObservableCollection<CurrentPostModel> _Items;
     }
