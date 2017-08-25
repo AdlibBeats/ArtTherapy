@@ -6,30 +6,30 @@ namespace ArtTherapy.Models.ItemsModels
     {
         public string Icon
         {
-            get { return _Icon; }
+            get => _Icon;
             set => _Icon = GetValue(value, nameof(Icon));
         }
-        string _Icon;
+        private string _Icon;
 
         public string Name
         {
-            get { return _Name; }
+            get => _Name;
             set => _Name = GetValue(value, nameof(Name));
         }
-        string _Name;
+        private string _Name;
 
         public string Description
         {
-            get { return _Description; }
+            get => _Description;
             set => _Description = GetValue(value, nameof(Description));
         }
-        string _Description;
+        private string _Description;
 
         public Type Type
         {
-            get { return _Type; }
+            get =>_Type;
             set => _Type = GetValue(value, nameof(Type));
         }
-        Type _Type;
+        private Type _Type;
     }
 }
